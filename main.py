@@ -55,7 +55,7 @@ def verify_email_domain(email: str) -> bool:
     except:
         return False
 
-SLACK_WEBHOOK = "https://hooks.slack.com/services/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"
+SLACK_WEBHOOK = os.getenv("SLACK_WEBHOOK")
 
 def send_slack_notification(lead: Lead, score: int, analysis: str):
     message = f"🔥 Hot Lead!\nName: {lead.name}\nEmail: {lead.email}\nCompany: {lead.company}\nScore: {score}\n\n🤖 AI Analysis:\n{analysis}"
