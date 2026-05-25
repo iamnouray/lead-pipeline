@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lead Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #0f172a; color: white; padding: 20px; }
+        h1 { color: #38bdf8; }
+        .lead { background: #1e293b; border-radius: 8px; padding: 16px; margin: 10px 0; }
+        .hot { border-left: 4px solid #ef4444; }
+        .warm { border-left: 4px solid #f59e0b; }
+        .cold { border-left: 4px solid #64748b; }
+        .score { font-size: 24px; font-weight: bold; float: right; }
+    </style>
+</head>
+<body>
+    <h1>🔥 Lead Dashboard</h1>
+    <div id="leads"></div>
+
+    <script>
+        async function loadLeads() {
+            const res = await fetch("http://localhost:8000/leads");
+            const data = await res.json();
+            const container = document.getElementById("leads");
+            data.leads.forEach(lead => {
+                container.innerHTML += `
+                <div class="lead ${lead.classification}">
+                    <span class="score">${lead.score}</span>
+                    <h3>${lead.name} — ${lead.company}</h3>
+                    <p>📧 ${lead.email} | 🏷️ ${lead.classification.toUpperCase()}</p>
+                    <p>${lead.message}</p>
+                </div>`;
+            });
+        }
+        loadLeads();
+    </script>
+</body>
+</html>
